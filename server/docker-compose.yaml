@@ -1,0 +1,31 @@
+
+services:
+  backend:
+    build: .
+    ports:
+      - "3000:3000"
+    command:
+     - npm install
+     - npm run start:dev
+    volumes:
+      - .:/app
+
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: azerty
+      POSTGRES_PASSWORD: azerty
+      POSTGRES_DB: projetEcommerce
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  database:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+volumes:
+  pgdata:
