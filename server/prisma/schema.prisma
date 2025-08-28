@@ -13,3 +13,42 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+enum UserType {
+  ADMIN
+  CLIENT
+}
+
+model User {
+  id       Int      @id @default(autoincrement()) @map("user_id")
+  email    String   @unique
+  userType UserType @default(CLIENT) @map("user_type")
+
+  passwordHash             String
+  first_name               String?   @map("first_name")
+  last_name                String?   @map("last_name")
+  phone                    String?   @unique
+  updatedAt                DateTime? @map("updated_at")
+  createdAt                DateTime  @map("created_at")
+  isEmailVerified          Boolean   @default(false) @map("is_email_verified")
+  lastPasswordChange       DateTime  @default(now()) @map("last_password_change")
+  failedLoginAttempts      Int       @default(0) @map("failed_login_attempts")
+  lastFailedLogin          DateTime? @map("last_failed_login")
+  resetPasswordToken       String?   @map("reset_password_token")
+  resetPasswordExpires     DateTime? @map("reset_password_expires")
+  emailVerificationToken   String?   @map("email_verification_token")
+  emailVerificationExpires DateTime? @map("email_verification_expires")
+  magicLinkToken           String?   @map("magic_link_token")
+  magicLinkExpires         DateTime? @map("magic_link_expires")
+
+  @@map("users")
+}
+
+model Product_images {
+  id        Int     @id @default(autoincrement()) @map("product_image_id")
+  image_url String  @map("image_url")
+  productId Int     @map("product_id")
+  alt_text  String? @map("alt_text")
+
+  @@map("product_images")
+}
