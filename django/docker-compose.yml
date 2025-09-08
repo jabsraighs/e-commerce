@@ -1,0 +1,33 @@
+services:
+  backend-django:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=1
+    depends_on:
+      - postgres
+      - database
+
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: azerty
+      POSTGRES_PASSWORD: azerty
+      POSTGRES_DB: projetEcommerce
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  database:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+volumes:
+  pgdata:
