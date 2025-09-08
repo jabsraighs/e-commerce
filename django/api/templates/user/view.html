@@ -1,0 +1,204 @@
+{% extends 'user/base.html' %}
+{% block content %}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg">
+                <div class="card-header bg-gradient-info text-white">
+                    <h4 class="card-title mb-0">
+                        <i class="fas fa-user-circle"></i> Profil utilisateur
+                    </h4>
+                </div>
+                <div class="card-body p-5">
+                    <div class="text-center mb-5">
+                        <div class="avatar-container">
+                            <i class="fas fa-user-circle fa-6x text-primary mb-3"></i>
+                        </div>
+                        <h2 class="text-primary">{{ user.first_name }} {{ user.last_name }}</h2>
+                        <p class="text-muted">@{{ user.username }}</p>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="info-card mb-4">
+                                <div class="info-header">
+                                    <i class="fas fa-user text-primary"></i>
+                                    <span class="info-label">Nom d'utilisateur</span>
+                                </div>
+                                <div class="info-value">{{ user.username }}</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="info-card mb-4">
+                                <div class="info-header">
+                                    <i class="fas fa-envelope text-primary"></i>
+                                    <span class="info-label">Adresse email</span>
+                                </div>
+                                <div class="info-value">{{ user.email }}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="info-card mb-4">
+                                <div class="info-header">
+                                    <i class="fas fa-id-badge text-primary"></i>
+                                    <span class="info-label">Prénom</span>
+                                </div>
+                                <div class="info-value">{{ user.first_name|default:"Non spécifié" }}</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="info-card mb-4">
+                                <div class="info-header">
+                                    <i class="fas fa-id-card text-primary"></i>
+                                    <span class="info-label">Nom de famille</span>
+                                </div>
+                                <div class="info-value">{{ user.last_name|default:"Non spécifié" }}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="info-card mb-4">
+                                <div class="info-header">
+                                    <i class="fas fa-calendar-alt text-primary"></i>
+                                    <span class="info-label">Date de création</span>
+                                </div>
+                                <div class="info-value">{{ user.date_joined|date:"d F Y à H:i" }}</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="info-card mb-4">
+                                <div class="info-header">
+                                    <i class="fas fa-clock text-primary"></i>
+                                    <span class="info-label">Dernière connexion</span>
+                                </div>
+                                <div class="info-value">
+                                    {% if user.last_login %}
+                                    {{ user.last_login|date:"d F Y à H:i" }}
+                                    {% else %}
+                                    Jamais connecté
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-card mb-4">
+                        <div class="info-header">
+                            <i class="fas fa-shield-alt text-primary"></i>
+                            <span class="info-label">Statut du compte</span>
+                        </div>
+                        <div class="info-value">
+                            {% if user.is_active %}
+                            <span class="badge badge-success badge-lg">
+                                    <i class="fas fa-check"></i> Actif
+                                </span>
+                            {% else %}
+                            <span class="badge badge-danger badge-lg">
+                                    <i class="fas fa-times"></i> Inactif
+                                </span>
+                            {% endif %}
+                            {% if user.is_superuser %}
+                            <span class="badge badge-warning badge-lg ml-2">
+                                    <i class="fas fa-crown"></i> Administrateur
+                                </span>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between mt-5">
+                        <a href="{% url 'getAllUsers' %}" class="btn btn-outline-secondary btn-lg">
+                            <i class="fas fa-arrow-left"></i> Retour à la liste
+                        </a>
+                        <div>
+                            <a href="{% url 'editUser' user.id %}" class="btn btn-warning btn-lg mr-2">
+                                <i class="fas fa-edit"></i> Modifier
+                            </a>
+                            <a href="{% url 'deleteUser' user.id %}"
+                               class="btn btn-danger btn-lg"
+                               onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')">
+                                <i class="fas fa-trash"></i> Supprimer
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .bg-gradient-info {
+        background: linear-gradient(135deg, #36d1dc 0%, #5b86e5 100%);
+    }
+
+    .info-card {
+        background: #f8f9fa;
+        border-radius: 15px;
+        padding: 20px;
+        border-left: 5px solid #007bff;
+        transition: all 0.3s ease;
+    }
+
+    .info-card:hover {
+        background: #e3f2fd;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .info-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .info-label {
+        font-weight: bold;
+        color: #6c757d;
+        margin-left: 10px;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .info-value {
+        font-size: 1.1rem;
+        color: #495057;
+        font-weight: 500;
+    }
+
+    .card {
+        border: none;
+        border-radius: 20px;
+    }
+
+    .card-header {
+        border-radius: 20px 20px 0 0 !important;
+    }
+
+    .btn {
+        border-radius: 25px;
+        transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    .badge-lg {
+        font-size: 0.9rem;
+        padding: 8px 12px;
+    }
+
+    .avatar-container {
+        position: relative;
+    }
+</style>
+
+{% endblock %}
