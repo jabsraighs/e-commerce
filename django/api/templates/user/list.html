@@ -1,108 +1,153 @@
 {% extends 'user/base.html' %}
 {% block content %}
-
-<div class="container mt-5">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="display-4 text-primary">Gestion des Utilisateurs</h1>
-        <a href="{% url 'addUser' %}" class="btn btn-success btn-lg">
-            <i class="fas fa-plus"></i> Ajouter un utilisateur
-        </a>
+<div class="list-container">
+    <div class="list-header">
+        <h3>Liste des utilisateurs</h3>
+        <p>Gérez les utilisateurs enregistrés dans le système</p>
     </div>
 
-    <div class="card shadow-lg">
-        <div class="card-header bg-gradient-primary text-white">
-            <h5 class="card-title mb-0">
-                <i class="fas fa-users"></i> Liste des Utilisateurs
-            </h5>
-        </div>
-        <div class="card-body p-0">
-            <div class="table-responsive">
-                <table class="table table-hover mb-0">
-                    <thead class="thead-dark">
-                    <tr>
-                        <th class="px-4 py-3">
-                            <i class="fas fa-user"></i> Nom d'utilisateur
-                        </th>
-                        <th class="px-4 py-3">
-                            <i class="fas fa-envelope"></i> Email
-                        </th>
-                        <th class="px-4 py-3">
-                            <i class="fas fa-id-card"></i> Prénom
-                        </th>
-                        <th class="px-4 py-3">
-                            <i class="fas fa-id-card"></i> Nom
-                        </th>
-                        <th class="px-4 py-3 text-center">
-                            <i class="fas fa-cogs"></i> Actions
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for user in users %}
-                    <tr class="border-bottom">
-                        <td class="px-4 py-3 font-weight-bold">{{ user.username }}</td>
-                        <td class="px-4 py-3">{{ user.email }}</td>
-                        <td class="px-4 py-3">{{ user.first_name }}</td>
-                        <td class="px-4 py-3">{{ user.last_name }}</td>
-                        <td class="px-4 py-3">
-                            <div class="btn-group" role="group">
-                                <a href="{% url 'viewUser' user.id %}"
-                                   class="btn btn-outline-info btn-sm"
-                                   data-toggle="tooltip" title="Voir les détails">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                                <a href="{% url 'editUser' user.id %}"
-                                   class="btn btn-outline-warning btn-sm"
-                                   data-toggle="tooltip" title="Modifier">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <a href="{% url 'deleteUser' user.id %}"
-                                   class="btn btn-outline-danger btn-sm"
-                                   data-toggle="tooltip" title="Supprimer"
-                                   onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')">
-                                    <i class="fas fa-trash"></i>
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
-                    {% empty %}
-                    <tr>
-                        <td colspan="5" class="text-center py-5 text-muted">
-                            <i class="fas fa-users fa-3x mb-3"></i>
-                            <h5>Aucun utilisateur trouvé</h5>
-                            <p>Commencez par ajouter votre premier utilisateur.</p>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
+    <div class="table-wrapper">
+        <table class="styled-table">
+            <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Email</th>
+                <th>Numéros de téléphone</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+            <tr>
+
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.phone_number }}</td>
+                <td class="actions">
+                    <a href="{% url 'viewUser' user.id %}" class="btn-edit"> Voir </a>
+                    <a href="{% url 'editUser' user.id %}" class="btn-edit">Modifier</a>
+                    <a href="{% url 'deleteUser' user.id %}" class="btn-delete" onclick="return confirm('Voulez-vous vraiment supprimer cet utilisateur ?')">Supprimer</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" class="empty-msg">Aucun utilisateur trouvé.</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="add-user">
+        <a href="{% url 'addUser' %}" class="btn-add">+ Ajouter un utilisateur</a>
     </div>
 </div>
 
 <style>
-    .bg-gradient-primary {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    .list-container {
+        max-width: 900px;
+        margin: 3rem auto;
+        padding: 2rem;
+        background: #fffdf9;
+        border: 1px solid rgba(212, 175, 55, 0.2);
+        border-radius: 1rem;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        font-family: "Inter", sans-serif;
     }
 
-    .table-hover tbody tr:hover {
-        background-color: rgba(0,123,255,.075);
-        transition: background-color 0.3s ease;
+    /* Header */
+    .list-header {
+        text-align: center;
+        margin-bottom: 1.5rem;
+    }
+    .list-header h3 {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 0.3rem;
+    }
+    .list-header p {
+        font-size: 0.9rem;
+        color: #6b7280;
     }
 
-    .btn-group .btn {
-        margin: 0 2px;
+    /* Table */
+    .table-wrapper {
+        overflow-x: auto;
+    }
+    .styled-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 1rem;
+        font-size: 0.95rem;
+    }
+    .styled-table thead {
+        background: #d4af37;
+        color: #fff;
+    }
+    .styled-table th, .styled-table td {
+        padding: 0.9rem 1rem;
+        text-align: left;
+    }
+    .styled-table tbody tr {
+        border-bottom: 1px solid #e5e7eb;
+        transition: background 0.2s ease;
+    }
+    .styled-table tbody tr:hover {
+        background: rgba(212, 175, 55, 0.08);
     }
 
-    .card {
-        border: none;
-        border-radius: 15px;
+    /* Actions */
+    .actions {
+        display: flex;
+        gap: 0.5rem;
+    }
+    .btn-edit, .btn-delete {
+        padding: 0.4rem 0.8rem;
+        border-radius: 0.4rem;
+        font-size: 0.85rem;
+        font-weight: 500;
+        text-decoration: none;
+        transition: all 0.2s ease;
+    }
+    .btn-edit {
+        background: #3b82f6;
+        color: #fff;
+    }
+    .btn-edit:hover {
+        background: #2563eb;
+    }
+    .btn-delete {
+        background: #ef4444;
+        color: #fff;
+    }
+    .btn-delete:hover {
+        background: #dc2626;
     }
 
-    .card-header {
-        border-radius: 15px 15px 0 0 !important;
+    /* Message si vide */
+    .empty-msg {
+        text-align: center;
+        color: #6b7280;
+        font-style: italic;
+    }
+
+    /* Ajouter utilisateur */
+    .add-user {
+        text-align: right;
+        margin-top: 1rem;
+    }
+    .btn-add {
+        background: #d4af37;
+        color: #fff;
+        padding: 0.6rem 1rem;
+        border-radius: 0.5rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: background 0.3s ease;
+    }
+    .btn-add:hover {
+        background: #b89028;
     }
 </style>
-
 {% endblock %}

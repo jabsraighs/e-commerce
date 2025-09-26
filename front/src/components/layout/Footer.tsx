@@ -16,8 +16,8 @@ export const Footer = () => {
                 LumièreArt
               </span>
             </div>
-            <p className="text-warm-cream/80 leading-relaxed">
-              Créateur de bougies artisanales d'exception depuis 2014. 
+            <p className="text-warm-cream leading-relaxed">
+              Créateur de bougies artisanales d'exception depuis 2014.
               L'art de la lumière pour illuminer vos moments précieux.
             </p>
           </div>

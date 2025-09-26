@@ -13,7 +13,7 @@ export const Hero = () => {
           alt="Collection de bougies artisanales élégantes"
           className="w-full h-full object-cover opacity-20"
         />
-        <div className="absolute inset-0 bg-gradient-hero opacity-80"></div>
+        <div className="absolute inset-0 bg-hero opacity-80"></div>
       </div>
 
       {/* Content */}
@@ -39,7 +39,7 @@ export const Hero = () => {
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <Button asChild variant="hero" size="lg" className="text-lg px-8 py-4">
+          <Button asChild size="lg" className="text-lg px-8 py-4">
             <Link to="/boutique">
               Découvrir la Collection
               <ArrowRight className="ml-2 h-5 w-5" />

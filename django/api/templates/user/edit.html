@@ -1,11 +1,94 @@
 {% extends 'user/base.html' %}
 {% block content %}
-<div class="container mt-5">
-    <h3>Modifier l'utilisateur</h3>
-    <form method="post">
+<div class="form-container">
+    <div class="form-header">
+        <h3>Modifier un utilisateur</h3>
+        <p>Remplissez les informations pour modifier les informations du compte</p>
+    </div>
+
+    <form method="post" class="styled-form">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit" class="btn btn-success">Enregistrer</button>
+
+        <button type="submit" class="btn-submit"> Modifier l'utilisateur </button>
     </form>
 </div>
+
+<style>
+    /* Container principal */
+    .form-container {
+        max-width: 500px;
+        margin: 3rem auto;
+        padding: 2rem;
+        background: #fffdf9;
+        border: 1px solid rgba(212, 175, 55, 0.2); /* doré clair */
+        border-radius: 1rem;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        font-family: "Inter", sans-serif;
+    }
+
+    /* Header */
+    .form-header {
+        text-align: center;
+        margin-bottom: 1.5rem;
+    }
+    .form-header h3 {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 0.3rem;
+    }
+    .form-header p {
+        font-size: 0.9rem;
+        color: #6b7280;
+    }
+
+    /* Champs du formulaire */
+    .styled-form p {
+        margin-bottom: 1.2rem;
+    }
+    .styled-form label {
+        display: block;
+        margin-bottom: 0.4rem;
+        font-weight: 500;
+        color: #333;
+    }
+    .styled-form input,
+    .styled-form select,
+    .styled-form textarea {
+        width: 100%;
+        padding: 0.7rem 0.9rem;
+        border: 1px solid rgba(212, 175, 55, 0.3);
+        border-radius: 0.5rem;
+        background: #fff;
+        font-size: 0.95rem;
+        color: #333;
+        outline: none;
+        transition: all 0.2s ease-in-out;
+    }
+    .styled-form input:focus,
+    .styled-form select:focus,
+    .styled-form textarea:focus {
+        border-color: #d4af37; /* doré */
+        box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.25);
+    }
+
+    /* Bouton */
+    .btn-submit {
+        display: block;
+        width: 100%;
+        padding: 0.8rem;
+        margin-top: 1rem;
+        background: #d4af37; /* doré */
+        color: #fff;
+        font-weight: 600;
+        border: none;
+        border-radius: 0.6rem;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+    .btn-submit:hover {
+        background: #b89028;
+    }
+</style>
 {% endblock %}

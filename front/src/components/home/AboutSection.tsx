@@ -51,7 +51,7 @@ export const AboutSection = () => {
               et de votre plaisir sensoriel.
             </p>
 
-            <Button asChild variant="hero" size="lg" className="text-lg px-8 py-4">
+            <Button asChild  size="lg" className="text-lg px-8 py-4">
               <Link to="/a-propos">
                 Découvrir notre histoire
               </Link>
